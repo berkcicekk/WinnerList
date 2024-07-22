@@ -18,6 +18,8 @@ import { publicProvider } from "wagmi/providers/public";
 import MainLayout from "../layout/mainLayout";
 import { useRouter } from "next/router";
 
+const projectId = 'ad5340727fa4f187fae379eea6a52bac'; // Your WalletConnect projectId
+
 const { chains, provider } = configureChains(
   [
     mainnet,
@@ -35,6 +37,7 @@ const { chains, provider } = configureChains(
 const { connectors } = getDefaultWallets({
   appName: "My Alchemy DApp",
   chains,
+  projectId // Adding the projectId here
 });
 
 const wagmiClient = createClient({
@@ -46,7 +49,7 @@ const wagmiClient = createClient({
 export { WagmiConfig, RainbowKitProvider };
 
 function MyApp({ Component, pageProps }) {
-  const router = useRouter()
+  const router = useRouter();
   const account = useAccount({
     onConnect({ address, connector, isReconnected }) {
       if (!isReconnected) router.reload();
